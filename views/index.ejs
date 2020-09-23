@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Memo</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  </head>
+  <body>
+    <h1>App part Memo</h1>
+    <p>Welcome to Starbucks I&C</p>
+    <textarea id="textData"><%= title %></textarea>
+    <br>
+    <button class="button" id="saveBtn">Save</button>
+    <button class="button" id="copyBtn">Copy</button>
+    <button class="button" id="refreshBtn">Refresh</button>
+
+    <div id="snackbar">...</div>
+
+  </body>
+  <script>
+
+    $(document).ready(function(){
+
+      $('#copyBtn').click(function(){
+
+        var copyText = document.getElementById("textData");
+
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+        /* Copy the text inside the text field */
+        document.execCommand("copy");
+
+        /* Alert the copied text */
+        showSnackbar("메세지가 클립보드에 복사 되었습니다!");
+      });
+
+      $('#refreshBtn').click(function(){
+        location.reload();
+        //showSnackbar("메세지가 갱신 되었습니다!");
+
+      });
+
+      $('#saveBtn').click(function() {
+        showSnackbar("메세지가 저장 되었습니다!");
+        var textData = $("textarea#textData").val();
+
+        //Ajax POST Method TEST
+        $.ajax({
+          url: '/save',
+          dataType: 'json',
+          type: 'POST',
+          data: {data:textData},
+          success: function(result) {
+            if (result) {
+              console.log(result.result);
+              //$('#post_output').html(result.result);
+            }
+          }
+        });
+      });
+    });
+
+    function showSnackbar(message) {
+      $("#snackbar").text(message);
+
+      // Get the snackbar DIV
+      var x = document.getElementById("snackbar");
+
+      // Add the "show" class to DIV
+      x.className = "show";
+
+      // After 3 seconds, remove the show class from DIV
+      setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    }
+
+  </script>
+</html>
