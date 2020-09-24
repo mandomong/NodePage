@@ -2,17 +2,25 @@
 <html>
   <head>
     <title>Memo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
   </head>
   <body>
-    <h1>App part Memo</h1>
-    <p>Welcome to Starbucks I&C</p>
-    <textarea id="textData"><%= title %></textarea>
-    <br>
-    <button class="button" id="saveBtn">Save</button>
-    <button class="button" id="copyBtn">Copy</button>
-    <button class="button" id="refreshBtn">Refresh</button>
+    <nav>
+      <a href="/">Memo</a> |
+      <a href="/showIp">IP list</a>
+    </nav>
+
+    <div class="jb-container">
+      <h1>App part Memo</h1>
+      <p>Welcome to Starbucks I&C</p>
+      <textarea id="textData"><%= title %></textarea>
+      <br>
+      <button class="button" id="saveBtn">Save</button>
+      <button class="button" id="copyBtn">Copy</button>
+      <button class="button" id="refreshBtn">Refresh</button>
+    </div>
 
     <div id="snackbar">...</div>
 
