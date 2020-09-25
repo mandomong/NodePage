@@ -39,7 +39,21 @@
   }
 }
 
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
 
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
 
 body {
   padding: 10px;
@@ -51,9 +65,14 @@ a {
 }
 
 textarea {
-  width: 300px;
+  width: 100%;
+  max-width: 100%;
   height: 300px;
   resize: none;
+}
+
+fieldset {
+  padding: 5px;
 }
 
 .button {
@@ -68,10 +87,12 @@ textarea {
   cursor: pointer;
 }
 
-#saveBtn {background-color: #4CAF50;}
-#copyBtn {background-color: #008CBA;}
+#saveBtn {background-color: #036635;}
+#copyBtn {background-color: #9c8758;}
 #refreshBtn {background-color: #FF6464;}
 #deleteBtn {background-color: #E56D29;}
+#changeBtn {background-color: #036635;}
+#returnBtn {background-color: #888888;}
 
 /* The snackbar - position it at the bottom and in the middle of the screen */
 #snackbar {
@@ -117,4 +138,43 @@ textarea {
 @keyframes fadeout {
   from {bottom: 30px; opacity: 1;}
   to {bottom: 0; opacity: 0;}
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
 }

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Memo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+
+    <div class="jb-header">
+        <nav>
+            <a href="/">Memo</a> |
+            <a href="/ip">IP list</a>
+        </nav>
+        <h2>📱App part Support system</h2>
+        <p>Welcome to Shinsegae I&C</p>
+    </div>
+
+    <div class="jb-container">
+        <select name="place">
+            <option value="">선택</option>
+            <option value="mesa7">메사 7층</option>
+            <option value="dyk5_76">대연각 5층(76대역)</option>
+            <option value="dyk5_86">대연각 5층(86대역)</option>
+            <option value="dyk5_72">대연각 5층(72대역)</option>
+        </select>
+        <br><br>
+        <table>
+            <tr>
+                <th>Ip</th>
+                <th>User</th>
+                <th>Purpose</th>
+                <th>start date</th>
+            </tr>
+            <% for(var i=0; i<result.length; i++) { %>
+                <tr>
+                    <td><button class="ipBtn"><%= result[i].IP %></button></td>
+                    <td><%= result[i].USER %></td>
+                    <td><span><%= result[i].PURPOSE %></span></td>
+                    <td><%= result[i].LAST_UPDATED %></td>
+                </tr>
+            <% }%>
+        </table>
+    </div>
+
+
+    <div id="snackbar">...</div>
+    <!-- The Modal -->
+    <div id="btnModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>IP 사용 내역 변경</p>
+        <fieldset>
+            <legend>변경</legend>
+            <label for="ip">IP :</label>
+            <input type="text" id="ipInput" name="ip" disabled><br><br>
+            <label for="user">user :</label>
+            <input type="text" id="userInput" name="user"><br><br>
+            <label for="purpose">purpose :</label>
+            <input type="text" id="purposeInput" name="purpose"><br><br>
+        </fieldset>
+        <button class="button" id="changeBtn">변경</button>
+        <button class="button" id="returnBtn">반납</button>
+
+    </div>
+
+    </div>
+
+</body>
+<script>
+
+    $(document).ready(function(){
+
+        // 변경 버튼
+        $('#changeBtn').click(function(){
+
+            var user = $('#userInput').val();
+            var purpose = $('#purposeInput').val();
+
+            //validation check
+            if (user == null || user == undefined || user == "" ||user.trim() == null){
+                return;
+            }
+            if (purpose == null || purpose == undefined || purpose == "" || purpose.trim() == null){
+                return;
+            }
+
+            modal.style.display = "none";
+            //showSnackbar("메세지가 갱신 되었습니다!");
+
+        });
+        // 반납 버튼
+        $('#returnBtn').click(function(){
+            var ip = $('#ipInput').val();
+            //showSnackbar("메세지가 갱신 되었습니다!");
+            $.ajax({
+                url: '/ip/return',
+                dataType: 'json',
+                type: 'POST',
+                data: {ip: ip
+                },
+                success: function(result) {
+                    if (result) {
+                        console.log(result.result);
+                        modal.style.display = "none";
+                    }
+                }
+            });
+
+        });
+
+    });
+
+    /* snackbar control */
+    function showSnackbar(message) {
+        $("#snackbar").text(message);
+
+        // Get the snackbar DIV
+        var x = document.getElementById("snackbar");
+
+        // Add the "show" class to DIV
+        x.className = "show";
+
+        // After 3 seconds, remove the show class from DIV
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    }
+
+    /* modal control */
+    var modal = document.getElementById("btnModal");
+
+    // Get the button that opens the modal
+    //var ipBtn = document.getElementById("ipBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    $('.ipBtn').click(function(){
+        var ip = $(this).text();
+        $('#ipInput').val(ip);
+        modal.style.display = "block";
+    });
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+</script>
+</html>
