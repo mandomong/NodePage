@@ -30,6 +30,7 @@ router.post('/return', function(req, res, next){
 
     maria.query(mariaSQL, [params], function(err, rows, fields){
         if (!err) {
+            res.set({'Content-Type': 'text/plain'});
             res.send('success');
         } else {
             console.log(err);

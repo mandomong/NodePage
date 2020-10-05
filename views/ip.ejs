@@ -94,6 +94,7 @@
         });
         // 반납 버튼
         $('#returnBtn').click(function(){
+            console.log("return btn")
             var ip = $('#ipInput').val();
             //showSnackbar("메세지가 갱신 되었습니다!");
             $.ajax({
@@ -103,13 +104,11 @@
                 data: {ip: ip
                 },
                 success: function(result) {
-                    if (result) {
-                        console.log(result.result);
-                        modal.style.display = "none";
-                    }
+                    console.log(result.result);
+                    //modal.style.display = "none";
                 }
             });
-
+            modal.style.display = "none";
         });
 
     });
